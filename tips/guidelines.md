@@ -1,3 +1,248 @@
+# 变量
+
+## 命名
+
+所有命名应该简单，并保证一定语义
+
+> 赋值 等号 前后加 空格
+
+### 常量
+
+全大写，并确保有完整语义
+
+例：
+``` ts
+const MAX_PARAMETER_COUNT = 100
+```
+
+> 建议把所有常量归置到一个对象中（此处命名可用常规类型和变量命名）
+
+例：
+``` ts
+const AppSetting = Object.freeze({MaxParameter: 100})
+```
+### 变量
+
+camelCase
+
+例：
+``` ts
+let options: object
+
+```
+
+#### 常用命名
+
+1. 计数器 i
+1. 单项值 item
+1. 索引 index
+1. 结果或返回值 result
+
+## 判断
+
+等于或不等于运算时，如果明显判断类型 应使用 === 和 !== 作严格判断
+
+属性判断（适用属性值 非零判断）
+
+``` ts
+let count = something.length || 10
+
+if (something.length) {
+	// todo
+} else {
+	// todo
+}
+
+```
+
+### 运算符
+
+&& 逻辑与：
+``` ts
+expr1 && expr2
+```
+
+|| 逻辑或：
+``` ts
+expr1 || expr2
+```
+! 逻辑非
+
+``` ts
+!expr
+```
+
+三目：
+``` ts
+condition ? expr1 : expr2 
+```
+
+### if
+
+例：
+``` ts
+if (condition1 === condition2) {
+	// todo
+} else if (condition3 === condition4) {
+	// todo
+} else {
+	// todo
+}
+```
+
+如果 代码只有一行，省略 { }
+例：
+``` ts
+if (condition1 === condition2)
+	// todo
+else if (condition3 === condition4)
+	// todo
+else 
+	// todo
+```
+
+避免嵌套
+
+例：
+``` ts
+function test () {
+	if (condition) {
+		// todo1
+	} else {
+		// todo2
+	}
+}
+
+function test () {
+	if (condition) {
+		// todo1
+		return
+	}
+	// todo2
+}
+```
+
+控制反转
+
+例：
+``` ts
+function test () {
+	if (condition) {
+		// todo1
+	} else {
+		// todo2
+	}
+}
+
+function test () {
+	if (!condition) {
+		// todo2
+		return
+	}
+
+	// todo1
+}
+
+```
+实例：
+``` ts
+async function 'm.add' (data) {
+  debug(this.protocol, data)
+  if (data && data.group && data.group.id && ((data.group.members && data.group.members.length) || (data.group.managers && data.group.managers.length))) {
+    let [result, err] = await this.service('member').upsert(data.group)
+    if (!err) {
+      if ((result.managers && result.managers.length) || (result.members && result.members.length)) {
+        if (result.members) {
+          result.members = result.members.map(e => e.id)
+        }
+        this.socket.user.reply(this.protocol, {id:data.id, group:result, ret:0})
+        if (result.members)  {
+          if (result.members.length === 0) {
+            return this.socket.group.to(result.id).broadcast(this.protocol, {id:data.id, group:result, operator:this.socket.user.id})
+          }
+          this.socket.group.join(result.id, result.members)
+          await this.service('user').upsert({id:result.members, group:result.id})
+        }
+        setTimeout(() => this.socket.group.to(result.id).broadcast(this.protocol, {id:data.id, group:result, operator:this.socket.user.id}), this.config.socket.delay)
+      } else {
+        this.socket.user.reply(this.protocol, {id:data.id, ret:400})
+      }
+    } else {
+      this.socket.user.reply(this.protocol, {id:data.id, ret:err })
+    }
+
+  } else {
+    this.socket.user.reply(this.protocol, {id: data.id, ret:400})
+  }
+}
+
+async function 'm.add' (data) {
+  debug(this.protocol, data)
+  if (!data || !data.group || !data.group.id || (data.group.members && data.group.members.length === 0) && (data.group.managers && data.group.managers.length === 0) ) return this.socket.user.reply(this.protocol, {id: data.id, ret:400})
+
+  let [result, err] = await this.service('member').upsert(data.group)
+
+  if (err) return this.socket.user.reply(this.protocol, {id:data.id, ret:err })
+
+  if ((result.managers && result.managers.length === 0) && (result.members && result.members.length === 0)) return this.socket.user.reply(this.protocol, {id:data.id, ret:400})
+
+  if (result.members)
+    result.members = result.members.map(e => e.id)
+
+  this.socket.user.reply(this.protocol, {id:data.id, group:result, ret:0})
+
+  if (result.members)  {
+    if (result.members.length === 0)
+      return this.socket.group.to(result.id).broadcast(this.protocol, {id:data.id, group:result, operator:this.socket.user.id})
+    this.socket.group.join(result.id, result.members)
+
+    await this.service('user').upsert({id:result.members, group:result.id})
+  }
+
+  setTimeout(() => this.socket.group.to(result.id).broadcast(this.protocol, {id:data.id, group:result, operator:this.socket.user.id}), this.config.socket.delay)
+}
+
+```
+
+### swtich
+
+``` ts
+swtich (condition) {
+	case '1':
+		break
+	case '2':
+	case '3':
+		break
+	default:
+}
+```
+备注：
+1. return 中断并跳出函数
+
+## 循环
+
+### for 及 foreach
+例：
+> 单行省略 {}
+``` ts
+for (let i = 0; i < count; i++) {
+	// todo
+}
+```
+
+``` ts
+for each (let key in obj) {
+
+}
+```
+
+备注：
+1. continue 忽略其后代码，直接进入下一循环
+1. break 中断当前循环
+1. return 中断循环并跳出函数
+
+
+
 # 命名
 
 1. 类型 PascalCase
