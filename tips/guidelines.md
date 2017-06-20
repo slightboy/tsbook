@@ -4,6 +4,21 @@
 
 所有命名应该简单，并保证一定语义
 
+1. 类型 PascalCase
+1. 类 PascalCase
+1. 枚举及枚举项 PascalCase
+1. 接口 PascalCase，并且不要使用 I 做前缀
+1. 函数 camelCase
+1. 属性或本地变量 camelCase
+1. 不要使用 m_ 当私有属性前缀，少用 _ 前缀
+1. 尽量保证命名有意义
+1. 单个返回值 result
+1. for，foreach 及其他单项值 item
+1. for 及其他单项计数器 i
+1. 索引 index
+1. 箭头函数 e
+
+
 > 赋值 等号 前后加 空格
 
 ### 常量
@@ -34,6 +49,7 @@ let options: object
 #### 常用命名
 
 1. 计数器 i
+1. 键 key
 1. 单项值 item
 1. 索引 index
 1. 结果或返回值 result
@@ -241,53 +257,36 @@ for each (let key in obj) {
 1. break 中断当前循环
 1. return 中断循环并跳出函数
 
-
-
-# 命名
-
-1. 类型 PascalCase
-1. 类 PascalCase
-1. 枚举及枚举项 PascalCase
-1. 接口 PascalCase，并且不要使用 I 做前缀
-1. 函数 camelCase
-1. 属性或本地变量 camelCase
-1. 不要使用 m_ 当私有属性前缀，少用 _ 前缀
-1. 尽量保证命名有意义
-1. 单个返回值 result
-1. for，foreach 及其他单项值 item
-1. for 及其他单项计数器 i
-1. 索引 index
-1. 箭头函数 e
-
-# 模块及组件
-
+## 模块及组件
 1. 一个文件对应一个逻辑组件
 1. 相似功能组件放在一个模块中
 1. 模块组织可以目录形式也可以以 namespace 形式
 
-# 类型
+
+
+## 类型
 
 1. 类型定义应放在文件顶部
 1. 不要在全局命名空间里定义类型或值
 1. 公共类型定义可以放在 /types.ts
 
-# null 和 undefined
+## null 和 undefined
 
 1. 使用 undefined，不要使用 null
 
-# flags
+## flags
 
 1. 当一个类型中有超过2个 bool 属性时，应该使用 flag
 
-# 注释
+## 注释
 
 1. JSDoc 风格注释
 
-# 字符串
+## 字符串
 
 1. 使用单引号
 
-# 注意事项
+## 注意事项
 
 1. 尽量不使用 for...in for...of
 1. 用 for 替代 foreach，也可使用 Array.prototype.forEach | Array.prototype.map | Array.prototype.filter
