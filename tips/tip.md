@@ -55,3 +55,11 @@ Vue：
 1. Vue 实例组成
 1. 模板结构
 1. 指令
+1. 计算属性、方法、事件
+1. 组件及组件之间通讯
+
+Vuex：
+1. namespace 应用、State 及绑定、Getters 及绑定、Mutations、Actions 及绑定
+
+JavaScript & TypeScript
+1. 变量、条件、循环相关命名，语法，规则及技巧

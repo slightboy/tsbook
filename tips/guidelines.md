@@ -291,7 +291,7 @@ for each (let key in obj) {
 1. 尽量不使用 for...in for...of
 1. 用 for 替代 foreach，也可使用 Array.prototype.forEach | Array.prototype.map | Array.prototype.filter
 
-
+ 
 
 ## 风格
 
